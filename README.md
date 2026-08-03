@@ -1,124 +1,111 @@
 # Spotify Popularity Predictor
 
-Projeto de Ciência de Dados e Machine Learning para análise de músicas do Spotify e previsão de popularidade utilizando Random Forest.
+Projeto de Ciência de Dados e Machine Learning para análise de músicas do Spotify e previsão de popularidade utilizando o algoritmo **Random Forest**.
+
+---
 
 ## Objetivo
 
-Investigar padrões presentes em músicas do Spotify e construir um modelo capaz de prever se uma faixa possui potencial para ser considerada popular.
+Investigar padrões presentes em faixas do Spotify e construir um modelo preditivo capaz de classificar se uma música possui potencial para ser considerada popular. 
 
-A popularidade é transformada em um problema de classificação binária:
+A popularidade é estruturada como um problema de **classificação binária**:
 
-- Popular → Popularidade > 60
-- Não Popular → Popularidade ≤ 60
+* **Popular** -> Popularidade > 60
+* **Não Popular** -> Popularidade <= 60
 
 ---
 
 ## Dataset
 
-Dataset utilizado:
-
-Spotify Tracks Dataset
-
-Contém informações sobre milhares de músicas, incluindo:
-
-- Popularidade
-- Danceability
-- Energy
-- Loudness
-- Tempo
-- Valence
-- Liveness
-- Explicit Content
-- Duração
-- Gênero musical
-- Artista
+* **Dataset Utilizado**: [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset) baixado via `kagglehub` (`maharshipandya/-spotify-tracks-dataset`).
+* **Descrição**: Contém informações detalhadas sobre milhares de músicas, cobrindo atributos acústicos e metadados como:
+  * `popularity`: Índice de popularidade da faixa (0 a 100).
+  * `duration_ms`: Duração da música em milissegundos.
+  * `explicit`: Indicador de conteúdo explícito (booleano).
+  * `danceability`: Grau de dançabilidade da faixa.
+  * `energy`: Medida percebida de intensidade e atividade.
+  * `key`: Tom da música.
+  * `loudness`: Volume geral da faixa em decibéis (dB).
+  * `mode`: Modalidade harmônica (Maior / Menor).
+  * `speechiness`: Presença de palavras faladas na faixa.
+  * `acousticness`: Nível de acústica da música.
+  * `instrumentalness`: Predição de ausência de vocais.
+  * `liveness`: Presença de audiência/elementos ao vivo.
+  * `valence`: Positividade/valência musical transmitida.
+  * `tempo`: Andamento musical estimado em BPM.
+  * `time_signature`: Fórmula de compasso estimada.
+  * `track_genre`: Gênero musical da faixa.
+  * `artists` & `track_name`: Nome dos artistas e da música.
 
 ---
 
 ## Etapas do Projeto
 
-### 1. Limpeza dos Dados
+### 1. Limpeza e Tratamento dos Dados
+* Download e carregamento do dataset direto do Kaggle via `kagglehub`.
+* Remoção de valores ausentes (`dropna()`).
+* Remoção de registros duplicados (`drop_duplicates()`).
+* Remoção de colunas que não agregam valor preditivo à modelagem: `Unnamed: 0`, `track_id` e `album_name`.
 
-- Remoção de valores ausentes
-- Remoção de duplicatas
-- Exclusão de colunas irrelevantes
-
-### 2. Análise Exploratória (EDA)
-
-Foram realizadas análises como:
-
-- Popularidade média por gênero
-- Top gêneros mais populares
-- Correlação entre variáveis musicais
-- Comparação entre músicas explícitas e não explícitas
-- Ranking dos artistas mais populares
-- Ranking das músicas mais populares
+### 2. Análise Exploratória de Dados (EDA)
+Realização de análises estatísticas e visuais para compreender os fatores que influenciam a popularidade:
+* Resumo estatístico de popularidade média, máxima e contagem agrupado por gênero musical (`track_genre`).
+* Identificação de gêneros com maior média de popularidade (ex.: *pop-film*, *k-pop*, *chill*, *sad*, *grunge*) e menor média (ex.: *iranian*, *romance*, *latin*).
+* Análise de correlação entre as variáveis musicais acústicas e a popularidade.
+* Comparação da popularidade entre músicas explícitas e não explícitas.
+* Ranking dos artistas e das faixas mais populares do dataset.
 
 ### 3. Engenharia de Features
-
-Criação das variáveis:
-
-- target
-- explicit_value
-
-para utilização no modelo de classificação.
+* Criação da variável alvo `target` (binária) baseada no limiar de popularidade (> 60).
+* Conversão da variável booleana `explicit` para o formato numérico `explicit_value`.
 
 ### 4. Machine Learning
+* **Algoritmo**: `Random Forest Classifier`
+* **Features de Entrada (Preditores)**:
+  * `duration_ms`
+  * `danceability`
+  * `energy`
+  * `loudness`
+  * `mode`
+  * `liveness`
+  * `valence`
+  * `tempo`
+  * `time_signature`
+  * `explicit_value`
+* **Variável Alvo**: `target` (1 = Popular, 0 = Não Popular)
 
-Modelo utilizado:
-
-Random Forest Classifier
-
-Variáveis de entrada:
-
-- duration_ms
-- danceability
-- energy
-- loudness
-- mode
-- liveness
-- valence
-- tempo
-- time_signature
-- explicit_value
-
-Variável alvo:
-
-- target
-
-### 5. Validação
-
-O desempenho do modelo foi avaliado utilizando:
-
-- Train/Test Split
-- Cross Validation (5 folds)
-- Classification Report
+### 5. Validação do Modelo
+* **Train/Test Split**: Separação do conjunto de dados entre treino e teste para avaliação imparcial.
+* **Cross Validation**: Validação cruzada com 5 folds para assegurar a consistência dos resultados.
+* **Métricas de Desempenho**: Avaliação completa via `Classification Report` (Acurácia, Precisão, Recall e F1-Score).
 
 ---
 
 ## Tecnologias Utilizadas
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Scikit-Learn
-- KaggleHub
+* **Linguagem**: Python
+* **Manipulação de Dados**: Pandas, NumPy
+* **Visualização de Dados**: Matplotlib, Seaborn
+* **Machine Learning**: Scikit-Learn
+* **Download de Datasets**: KaggleHub
 
 ---
 
 ## Resultados
 
-O modelo foi capaz de identificar padrões associados à popularidade musical utilizando características acústicas das músicas.
-
-A validação cruzada foi utilizada para garantir maior robustez dos resultados.
+* O modelo **Random Forest** foi capaz de capturar padrões complexos não lineares entre os atributos acústicos e a popularidade das faixas.
+* A utilização de validação cruzada garantiu estabilidade na capacidade de generalização do modelo frente a novos dados.
 
 ---
 
 ## Exemplo de Predição
 
-O usuário pode fornecer características de uma música:
+O modelo aceita um vetor numérico contendo os atributos acústicos e gerais da faixa:
 
 ```python
-[230666, 0.676, 0.461, -6.746, 1, 0.358, 0.715, 87.917, 4, 0]
+# Exemplo de entrada (features de uma música):
+# [duration_ms, danceability, energy, loudness, mode, liveness, valence, tempo, time_signature, explicit_value]
+amostra = [[230666, 0.676, 0.461, -6.746, 1, 0.358, 0.715, 87.917, 4, 0]]
+
+# Previsão do modelo:
+# Saída: 1 (Popular) ou 0 (Não Popular)
