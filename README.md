@@ -76,10 +76,11 @@ Realização de análises estatísticas e visuais para compreender os fatores qu
 
 * 
 ### 5. Validação do Modelo
-* **Holdout Validation**: Divisão do conjunto de dados em 85% para treino e 15% para teste via `train_test_split`.
-* **Estratificação (`stratify`)**: Manutenção da proporção das classes da variável alvo entre os dados de treino e teste.
+* **Holdout Validation**: Divisão inicial do conjunto de dados em 85% para treino e 15% para teste via `train_test_split`.
+* **Estratificação (`stratify`)**: Manutenção da proporção original das classes da variável alvo nos conjuntos de treino e teste.
+* **Validação Cruzada (Cross-Validation)**: Avaliação do modelo em 5 dobras (*5-fold CV*) para validar a consistência e robustez dos resultados.
 * **Ajuste de Pesos (`class_weight='balanced'`)**: Tratamento do desbalanceamento de classes no algoritmo Random Forest.
-* **Métricas de Desempenho**: Avaliação do modelo no conjunto de teste via `classification_report` (Precisão, Recall, F1-Score e Acurácia).
+* **Métricas de Desempenho**: Avaliação completa via `classification_report` e medição do F1-Score macro.
 
 ---
 
@@ -96,7 +97,6 @@ Realização de análises estatísticas e visuais para compreender os fatores qu
 ## Resultados
 
 * O modelo **Random Forest** foi capaz de capturar padrões complexos não lineares entre os atributos acústicos e a popularidade das faixas.
-* A utilização de validação cruzada garantiu estabilidade na capacidade de generalização do modelo frente a novos dados.
 
 ---
 
