@@ -10,8 +10,8 @@ Investigar padrões presentes em faixas do Spotify e construir um modelo prediti
 
 A popularidade é estruturada como um problema de **classificação binária**:
 
-* **Popular** -> Popularidade > 60
-* **Não Popular** -> Popularidade <= 60
+* **Popular** -> Popularidade > 70
+* **Não Popular** -> Popularidade <= 70
 
 ---
 
@@ -74,10 +74,12 @@ Realização de análises estatísticas e visuais para compreender os fatores qu
   * `explicit_value`
 * **Variável Alvo**: `target` (1 = Popular, 0 = Não Popular)
 
+* 
 ### 5. Validação do Modelo
-* **Train/Test Split**: Separação do conjunto de dados entre treino e teste para avaliação imparcial.
-* **Cross Validation**: Validação cruzada com 5 folds para assegurar a consistência dos resultados.
-* **Métricas de Desempenho**: Avaliação completa via `Classification Report` (Acurácia, Precisão, Recall e F1-Score).
+* **Holdout Validation**: Divisão do conjunto de dados em 85% para treino e 15% para teste via `train_test_split`.
+* **Estratificação (`stratify`)**: Manutenção da proporção das classes da variável alvo entre os dados de treino e teste.
+* **Ajuste de Pesos (`class_weight='balanced'`)**: Tratamento do desbalanceamento de classes no algoritmo Random Forest.
+* **Métricas de Desempenho**: Avaliação do modelo no conjunto de teste via `classification_report` (Precisão, Recall, F1-Score e Acurácia).
 
 ---
 
